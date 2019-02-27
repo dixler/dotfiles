@@ -230,7 +230,7 @@
         bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 +10%
 
     # locking
-        bindsym $mod+Shift+period exec physlock 
+        bindsym $mod+Shift+period exec i3lock 
 
 #################################################################
 # AESTHETIC
