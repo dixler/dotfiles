@@ -1,0 +1,279 @@
+#i3 configuration file 
+#################################################################
+# VARIABLES
+#################################################################
+    # modifier key
+        set $mod Mod1
+
+#################################################################
+# STARTUP SCRIPTS
+#################################################################
+    # load sys_utils
+        exec --no-startup-id nm-applet &
+        exec xfce4-panel &
+        exec xfce4-volumed-pulse &
+        exec xfce4-power-manager &
+        exec blueman-applet &
+
+    # load config
+        exec setxkbmap dvorak -option "caps:swapescape" -option "ctrl:ralt_rctrl" &
+        exec xinput disable "ETPS/2 Elantech Touchpad" &
+
+#################################################################
+# TESTING
+#################################################################
+#assign [class="RexView.exe"] "RexView"
+#assign [class="RexDraw.exe"] "RexDraw"
+#assign [class="Configure.exe"] "Configure"
+#
+#exec /root/Desktop/RexDraw.desktop
+#exec /root/Desktop/RexView.desktop
+#
+#exec /root/Desktop/PeakHMI.desktop
+
+
+
+#################################################################
+# EXECUTION
+#################################################################
+    # start a terminal
+
+    # i tried
+        #bindsym $mod+grave exec emacsclient -c -q --eval '(ansi-term "/bin/zsh")'
+        bindsym $mod+e exec emacsclient -c
+
+        bindsym Mod4+space exec "$HOME/.bin/loc_term"
+        bindsym $mod+space exec xfce4-terminal --disable-server
+
+    # start a terminal
+        bindsym $mod+Return exec --no-startup-id dmenu_run
+
+    # chromium
+        bindsym $mod+c exec chromium-browser
+        bindsym $mod+Shift+c exec chromium-browser --incognito
+
+    # scrot
+        bindcode 107 exec scrot ~/Pictures/scrot/$(date +scrt.%h.%e.%g-%I.%M).png
+
+#################################################################
+# PIANO MANAGEMENT
+#################################################################
+   
+        bindsym $mod+m mode "music"
+
+        mode "music" {
+                # when you need to stfu
+                bindsym F1 exec pactl set-sink-mute 0 toggle
+                bindsym F2 exec pactl set-sink-volume 0 -10%
+                bindsym F3 exec pactl set-sink-volume 0 +10%
+                bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 -10%
+                bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 +10%
+                # resizing commands
+                bindsym a exec music 34
+                bindsym o exec music 35
+                bindsym e exec music 36
+                bindsym u exec music 37
+
+                bindsym i exec music 38
+                bindsym d exec music 40
+
+                bindsym h exec music 42
+                bindsym t exec music 43
+                bindsym n exec music 46
+                bindsym s exec music 48
+
+                # back to normal: Enter or Escape
+                bindsym Escape mode "default"
+        }
+
+
+
+
+
+#################################################################
+# WINDOW MANAGEMENT
+#################################################################
+    # kill focused window
+        bindsym $mod+w kill
+
+    # window selection
+        # change focus
+            bindsym $mod+h focus left
+            bindsym $mod+t focus up
+            bindsym $mod+n focus down
+            bindsym $mod+s focus right
+
+        # change tty
+            #bindsym $mod+Left exec sudo chvt $(tty | sed -e "s/\/dev\/pts\///g" | awk '{ print $1 - 1 }')
+            #bindsym $mod+Right exec sudo chvt $(tty | sed -e "s/\/dev\/pts\///g" | awk '{ print $1 + 1 }')
+
+        # move focused window
+            bindsym $mod+Shift+h move left 1250;
+            bindsym $mod+Shift+t move up 635;
+            bindsym $mod+Shift+n move down 635;
+            bindsym $mod+Shift+s move right 1250;
+
+        # move fine movements
+            bindsym $mod+Control+h move left
+            bindsym $mod+Control+t move up
+            bindsym $mod+Control+n move down
+            bindsym $mod+Control+s move right
+
+    # sticky
+        bindsym $mod+Shift+space floating toggle; sticky toggle; [floating] move absolute position 1253 65; [floating] resize set 666 380; 
+        bindsym $mod+Shift+bracketright [floating] move scratchpad
+        bindsym $mod+bracketright [floating] scratchpad show
+
+    # enter fullscreen mode for the focused container
+        bindsym $mod+u fullscreen toggle
+
+    # resize window (you can also use the mouse for that)
+        bindsym $mod+p mode "resize"
+
+        mode "resize" {
+                # resizing commands
+                bindsym h resize shrink width 10 px or 10 ppt
+                bindsym t resize grow height 10 px or 10 ppt
+                bindsym n resize shrink height 10 px or 10 ppt
+                bindsym s resize grow width 10 px or 10 ppt
+
+                # back to normal: Enter or Escape
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+        }
+
+# libinput is garbage
+        bindsym $mod+v mode "mouse"
+        mode "mouse" {
+             # resizing commands
+             bindsym h exec xdotool mousemove_relative --sync -- -10 0
+             bindsym t exec xdotool mousemove_relative --sync -- 0 -10
+             bindsym n exec xdotool mousemove_relative --sync -- 0 10
+             bindsym s exec xdotool mousemove_relative --sync -- 10 0
+
+
+             bindsym $mod+h exec xdotool mousemove_relative --sync -- -20 0
+             bindsym $mod+t exec xdotool mousemove_relative --sync -- 0 -20
+             bindsym $mod+n exec xdotool mousemove_relative --sync -- 0 20
+             bindsym $mod+s exec xdotool mousemove_relative --sync -- 20 0
+
+             # back to normal: Enter or Escape
+             bindsym Escape mode "default"
+        }
+
+    # orientation
+        # split in horizontal orientation
+            bindsym $mod+k split h
+            
+        # split in vertical orientation
+            bindsym $mod+j split v
+
+        # change container layout (stacked, tabbed, toggle split)
+            bindsym $mod+o layout stacking
+            bindsym $mod+comma layout tabbed
+            bindsym $mod+period layout toggle split
+
+        # toggle tiling / floating
+            bindsym $mod+f floating toggle
+
+        # change focus between tiling / floating windows
+            bindsym $mod+Tab focus mode_toggle; mode "floating"
+
+#################################################################
+# WORKSPACE MANAGEMENT
+#################################################################
+    # switch to workspace
+        bindsym $mod+1 workspace "    1    "
+        bindsym $mod+2 workspace "    2    "
+        bindsym $mod+3 workspace "    3    "
+        bindsym $mod+4 workspace "    4    "
+        bindsym $mod+5 workspace "    5    "
+        bindsym $mod+6 workspace "    6    "
+        bindsym $mod+7 workspace "    7    "
+        bindsym $mod+8 workspace "    8    "
+        bindsym $mod+9 workspace "    9    "
+        bindsym $mod+0 workspace "    10    "
+
+    # move focused container to workspace
+        bindsym $mod+Shift+1 move container to workspace "    1    "
+        bindsym $mod+Shift+2 move container to workspace "    2    "
+        bindsym $mod+Shift+3 move container to workspace "    3    "
+        bindsym $mod+Shift+4 move container to workspace "    4    "
+        bindsym $mod+Shift+5 move container to workspace "    5    "
+        bindsym $mod+Shift+6 move container to workspace "    6    "
+        bindsym $mod+Shift+7 move container to workspace "    7    "
+        bindsym $mod+Shift+8 move container to workspace "    8    "
+        bindsym $mod+Shift+9 move container to workspace "    9    "
+        bindsym $mod+Shift+0 move container to workspace "    10    "
+
+#################################################################
+# ENVIROMENT COMMANDS
+#################################################################
+    # reload the configuration file
+        bindsym $mod+Shift+j reload
+
+    # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+        bindsym $mod+Shift+p restart
+
+    # exit i3 (logs you out of your X session)
+        bindsym $mod+Delete exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+    # backlight commands
+        bindsym $mod+equal exec sudo backlight +
+        bindsym $mod+slash exec sudo backlight -
+
+    # audio commands
+        bindsym F1 exec pactl set-sink-mute 0 toggle
+        bindsym F2 exec pactl set-sink-volume 0 -10%
+        bindsym F3 exec pactl set-sink-volume 0 +10%
+        bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 -10%
+        bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 +10%
+
+    # locking
+        bindsym $mod+Shift+period exec physlock 
+
+#################################################################
+# AESTHETIC
+#################################################################
+    # border size
+        new_window pixel 4
+        
+    # font
+        font pango:product sans regular 12
+
+    # do not focus mouse hovered window
+        focus_follows_mouse no
+
+    # do not allow stealing focus
+        focus_on_window_activation urgent
+
+    # window border colors
+        # class                  border  backgr.	text       indicator	child_border
+        client.focused           #000000 #ffffff    #002b36    #2e9ef4		#20ff00
+        #client.focused_inactive #000000 #00ff00    #859900    #484e50		#8cd0d3
+        #client.unfocused        #000000 #00ff00    #859900    #292d2e   	#102030
+        #client.urgent           #2f343a #900000    #ffffff    #900000   	#900000
+        #client.placeholder      #000000 #0c0c0c    #ffffff    #000000   	#ffffff
+
+        client.background       #00ffff
+
+    # i3status configuration
+        bar {
+            status_command i3status 
+            i3bar_command i3bar
+            position top
+            #height 28   # aligns with xfce4-panel
+            tray_output none    # reserve icons for xfce4-panel
+            colors{
+                background #1a1a1a
+                statusline #ffffff
+        #		<colorclass> 		<border> <background> <text>
+                    focused_workspace  	#000000 #20ff00 #061638
+                    active_workspace   	#000000 #061638 #20ff00
+                    inactive_workspace 	#000000 #061638 #20ff00
+                    urgent_workspace   	#000000 #dc322f #000000
+                    binding_mode       	#000000 #dc322f #000000
+            }
+        }
+
+
