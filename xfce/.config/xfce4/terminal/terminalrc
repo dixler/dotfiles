@@ -24,4 +24,5 @@ MiscRewrapOnResize=TRUE
 MiscUseShiftArrowsToScroll=FALSE
 MiscSlimTabs=FALSE
 MiscNewTabAdjacent=FALSE
+WordChars=-A-Za-z0-9./?%&#:_=+@~
 

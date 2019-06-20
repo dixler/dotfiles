@@ -14,22 +14,26 @@
         exec xfce4-volumed-pulse &
         exec xfce4-power-manager &
         exec blueman-applet &
-
+        exec compton -f --config $HOME/.config/compton/compton.conf &
+        exec /usr/lib64/xfce4/notifyd/xfce4-notifyd &
     # load config
-        exec setxkbmap dvorak -option "caps:swapescape" -option "ctrl:ralt_rctrl" &
+        #exec setxkbmap dvorak -option "caps:swapescape" -option "ctrl:ralt_rctrl" &
         exec xinput disable "ETPS/2 Elantech Touchpad" &
 
 #################################################################
 # TESTING
 #################################################################
-#assign [class="RexView.exe"] "RexView"
-#assign [class="RexDraw.exe"] "RexDraw"
-#assign [class="Configure.exe"] "Configure"
 #
-#exec /root/Desktop/RexDraw.desktop
-#exec /root/Desktop/RexView.desktop
-#
-#exec /root/Desktop/PeakHMI.desktop
+#################################################################
+# HUD
+#################################################################
+   #bindcode Mod4+23 workspace "           "
+   #bindsym --release Mod4+Tab workspace back_and_forth
+
+   assign [class="Surf"] "           "
+   for_window [class="Surf"] fullscreen enable
+   #exec npm start --prefix ./Documents/clock/my-app/
+   #exec surf http://localhost:4001
 
 
 
