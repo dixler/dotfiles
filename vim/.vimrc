@@ -15,6 +15,9 @@ Plug 'hashivim/vim-terraform'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'haya14busa/incsearch.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'pangloss/vim-javascript'
+
 
 Plug 'vim-syntastic/syntastic'
 
@@ -115,7 +118,6 @@ au InsertChange * call InsertStatuslineColor(v:insertmode)
 au InsertLeave * hi Normal ctermbg=232 guibg=#000000
 
 " syntastic
-let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -131,5 +133,5 @@ map g/ <Plug>(incsearch-stay)
 set hlsearch
 
 
+autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
 colorscheme cobalt
-:set rtp+=<SHARE_DIR>/merlin/vim
